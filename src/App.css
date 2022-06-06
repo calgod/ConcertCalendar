@@ -10,6 +10,7 @@
 }
 
 .header {
+  font-size: larger;
   font-weight: 500;
   color: rgb(0, 0, 0);
   text-shadow: rgb(123, 191, 255) 1px 5px 5px;
@@ -19,4 +20,10 @@
 .headerDiv {
   width: 100%;
   height: fit-content;
+}
+
+.link {
+  font-size:large;
+  font-family: "Roboto";
+  color: rgb(216, 151, 0);
 }
