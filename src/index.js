@@ -5,7 +5,6 @@ import './index.css';
 import App from './App';
 import Concerts from './Concerts'
 import reportWebVitals from './reportWebVitals';
-import CssBaseline from '@mui/material/CssBaseline';
 
 export default function Index() {
   return (
