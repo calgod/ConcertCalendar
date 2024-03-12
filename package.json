@@ -2,6 +2,7 @@
   "name": "calendar-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://www.calgod.com",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
@@ -15,7 +16,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-google-calendar-api": "^1.5.2",
-    "react-scripts": "^2.1.3",
+    "react-scripts": "^5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -43,6 +44,7 @@
     ]
   },
   "devDependencies": {
-    "react-router-dom": "^6.3.0"
+    "react-router-dom": "^6.3.0",
+    "@babel/plugin-proposal-private-property-in-object":"7.21.11"
   }
 }
