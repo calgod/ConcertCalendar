@@ -4,7 +4,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-function Concerts() {
+function ConcertHistory() {
 
   return (
     <div className='App'>
@@ -13,4 +13,4 @@ function Concerts() {
   );
 }
 
-export default Concerts;
+export default ConcertHistory;

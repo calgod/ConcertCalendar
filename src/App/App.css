@@ -9,7 +9,7 @@
   font-size: calc(10px + 2vmin);
 }
 
-.header {
+.pageHeader {
   font-size: larger;
   font-weight: 500;
   color: rgb(0, 0, 0);
