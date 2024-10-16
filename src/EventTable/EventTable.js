@@ -8,13 +8,11 @@ export function EventTable() {
     const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
-        const calendarId = process.env.REACT_APP_GOOGLE_CALENDAR_ID;
-        const apiKey = process.env.REACT_APP_GOOGLE_CALENDAR_API_KEY;
 
         const fetchCalendarEvents = async () => {
         try {
             const response = await fetch(
-            `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}`
+                `https://www.calgod.com/api`
             );
             const data = await response.json();
 
