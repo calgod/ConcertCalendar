@@ -1,11 +1,11 @@
 import './App.css';
 import React from 'react';
 import { Link } from "react-router-dom";
-import EventTable from '../EventTable/EventTable';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import ConcertGrid from '../ConcertGrid/ConcertGrid';
 
 function App() {
 
@@ -16,7 +16,7 @@ function App() {
       </div>
       <br></br>
       <div>
-        <EventTable></EventTable>
+        <ConcertGrid></ConcertGrid>
       </div>
       <br></br>
       <div>
