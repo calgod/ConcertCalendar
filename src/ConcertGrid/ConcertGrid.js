@@ -27,7 +27,7 @@ function ConcertGrid() {
   const formatDateTime = (dateString) => {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat('en-US', {
-      timeZone: 'UTC',
+      timeZone: 'America/New_York',
       month: 'short',
       day: 'numeric',
       year: 'numeric',
