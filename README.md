@@ -1,6 +1,6 @@
 # Getting Started
 
-This web app is viewable at https://calsconcerts.com/
+This web app is viewable at https://www.calgod.com/
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
