@@ -64,15 +64,18 @@ function ConcertGrid() {
       style={{
         cursor: 'pointer',
         width: '100%',
-        maxWidth: 300,
-        height: 'auto', // Change this to a fixed height if needed
+        maxWidth: 350,
+        height: 'auto',
+        maxHeight: expandedEventId === event.id ? 500 : 90,
+        transition: 'max-height 0.2s ease-in-out',
+        overflow: 'hidden'
       }}
     >
       <Group position="apart" style={{ marginBottom: 5 }}>
-        <Text weight={500} style={{ flex: 1 }}>
+        <Text weight={500} style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           {event.summary || 'No Title'}
         </Text>
-        <Text color="dimmed" size="sm" style={{ whiteSpace: 'nowrap', marginLeft: 'auto' }}>
+        <Text color="dimmed" size="sm" style={{ flex: 1, whiteSpace: 'wrap', marginLeft: 'auto' }}>
           {event.start.dateTime ? formatDateTime(event.start.dateTime) : formatDate(event.start.date)}
         </Text>
       </Group>
