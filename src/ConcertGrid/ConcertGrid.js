@@ -84,7 +84,9 @@ function ConcertGrid() {
         height: 'auto',
         maxHeight: expandedEventId === event.id ? 500 : 90,
         transition: 'all 0.2s ease',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        backgroundColor: 'white',
+        color: 'rgb(59, 59, 59)'
       }}
     >
       <Group position="apart" style={{ marginBottom: 5 }}>
