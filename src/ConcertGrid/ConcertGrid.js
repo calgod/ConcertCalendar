@@ -1,13 +1,28 @@
 import { Card, Text, Group, Collapse, SimpleGrid } from '@mantine/core';
 import { useState, useEffect } from 'react';
 import { fetchCalendarEvents } from '../API/api';
+import './ConcertGrid.css';
 
 function ConcertGrid() {
   const [events, setEvents] = useState([]);
   const [expandedEventId, setExpandedEventId] = useState(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const toggleExpanded = (id) => {
-    setExpandedEventId((prevId) => (prevId === id ? null : id));
+    if (isTransitioning) return;
+    
+    if (expandedEventId && expandedEventId !== id) {
+      setIsTransitioning(true);
+      // Collapse the current card
+      setExpandedEventId(null);
+      // Wait for collapse animation to finish before expanding new card
+      setTimeout(() => {
+        setExpandedEventId(id);
+        setIsTransitioning(false);
+      }, 200);
+    } else {
+      setExpandedEventId(expandedEventId === id ? null : id);
+    }
   };
 
   useEffect(() => {
@@ -61,13 +76,14 @@ function ConcertGrid() {
       radius="md"
       withBorder
       onClick={() => toggleExpanded(event.id)}
+      className="concert-card"
       style={{
         cursor: 'pointer',
         width: '100%',
         maxWidth: 350,
         height: 'auto',
         maxHeight: expandedEventId === event.id ? 500 : 90,
-        transition: 'max-height 0.2s ease-in-out',
+        transition: 'all 0.2s ease',
         overflow: 'hidden'
       }}
     >
@@ -79,7 +95,7 @@ function ConcertGrid() {
           {event.start.dateTime ? formatDateTime(event.start.dateTime) : formatDate(event.start.date)}
         </Text>
       </Group>
-      <Collapse in={expandedEventId === event.id}>
+      <Collapse in={expandedEventId === event.id} transitionDuration={200}>
         <Text
           size="sm"
           color="gray"
@@ -104,4 +120,4 @@ function ConcertGrid() {
   );
 }
 
-export default ConcertGrid;
+export default ConcertGrid;s
