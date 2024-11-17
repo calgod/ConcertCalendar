@@ -11,8 +11,7 @@ function ResponsiveHeader() {
         sx={(theme) => ({
         display: 'flex',
         justifyContent: 'center',
-        padding: '2rem',
-        paddingTop: isMobile ? '100px' : '2rem'
+        padding: '2rem'
         })}
     >
       <img 
@@ -20,7 +19,7 @@ function ResponsiveHeader() {
         alt="Concert Calendar"
         style={{
           width: '100%',
-          maxWidth: isMobile ? '400px' : '900px'
+          maxWidth: isMobile ? '350px' : '900px'
         }}
       />
     </Box>
