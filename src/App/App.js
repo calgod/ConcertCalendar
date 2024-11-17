@@ -6,19 +6,22 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import ConcertGrid from '../ConcertGrid/ConcertGrid';
+import ResponsiveHeader from '../ResponsiveHeader/ResponsiveHeader';
+import { Space } from '@mantine/core';
 
 function App() {
 
   return (
     <div className='App'>
+      <Space h={30}></Space>
       <div className='headerDiv'>
-        <h1 className='pageHeader'>Concerts that I kind of want to go to</h1>
+        <ResponsiveHeader></ResponsiveHeader>
       </div>
-      <br></br>
+      <Space h={30}></Space>
       <div>
         <ConcertGrid></ConcertGrid>
       </div>
-      <br></br>
+      <Space h={30}></Space>
       <div>
         <Link hidden = "true" className='link' to="/concerts">Concerts I've been to</Link>
       </div>
