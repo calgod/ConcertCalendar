@@ -1,4 +1,4 @@
-import { Card, Text, Group, Collapse, SimpleGrid } from '@mantine/core';
+import { Card, Text, Group, Collapse, SimpleGrid, Loader, Center } from '@mantine/core';
 import { useState, useEffect } from 'react';
 import { fetchCalendarEvents } from '../API/api';
 import './ConcertGrid.css';
@@ -7,6 +7,7 @@ function ConcertGrid() {
   const [events, setEvents] = useState([]);
   const [expandedEventId, setExpandedEventId] = useState(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const toggleExpanded = (id) => {
     if (isTransitioning) return;
@@ -27,6 +28,7 @@ function ConcertGrid() {
 
   useEffect(() => {
     async function fetchData() {
+      setLoading(true);
       const data = await fetchCalendarEvents();
       const today = new Date().toISOString();
       const upcomingEvents = data.items.filter(event => {
@@ -34,6 +36,7 @@ function ConcertGrid() {
         return eventDate >= today;
       });
       setEvents(upcomingEvents);
+      setLoading(false);
     }
 
     fetchData();
@@ -61,7 +64,7 @@ function ConcertGrid() {
     }).format(date); 
   };
 
-  // Sort events by date in descending order
+  // Sort events by date in ascending order
   events.sort((a, b) => {
     const dateA = new Date(a.start.dateTime || a.start.date);
     const dateB = new Date(b.start.dateTime || b.start.date);
@@ -112,13 +115,19 @@ function ConcertGrid() {
   ));
 
   return (
-    <SimpleGrid
-      cols={{ base: 1, sm: 2, lg: 3 }}
-      spacing={{ base: 10, sm: 'xl' }}
-      verticalSpacing={{ base: 'md', sm: 'xl' }}
-    >
-      {rows}
-    </SimpleGrid>
+    loading ? (
+      <Center style={{ height: '100%' }}>
+        <Loader size="xl" color="gray" type="oval"/>
+      </Center>
+    ) : (
+      <SimpleGrid
+        cols={{ base: 1, sm: 2, lg: 3 }}
+        spacing={{ base: 10, sm: 'xl' }}
+        verticalSpacing={{ base: 'md', sm: 'xl' }}
+      >
+        {rows}
+      </SimpleGrid>
+    )
   );
 }
 
