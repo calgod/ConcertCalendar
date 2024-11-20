@@ -69,46 +69,46 @@ function ConcertGrid() {
   });
 
   const rows = events.map((event) => (
-    <Card
-      key={event.id}
-      shadow="sm"
-      padding="lg"
-      radius="md"
-      withBorder
-      onClick={() => toggleExpanded(event.id)}
-      className="concert-card"
-      style={{
-        cursor: 'pointer',
-        width: '100%',
-        maxWidth: 350,
-        height: 'auto',
-        maxHeight: expandedEventId === event.id ? 500 : 90,
-        transition: 'all 0.2s ease',
-        overflow: 'hidden',
-        backgroundColor: 'white',
-        color: 'rgb(59, 59, 59)'
-      }}
-    >
-      <Group position="apart" style={{ marginBottom: 5 }}>
-        <Text weight={500} style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          {event.summary || 'No Title'}
-        </Text>
-        <Text color="dimmed" size="sm" style={{ flex: 1, whiteSpace: 'wrap', marginLeft: 'auto' }}>
-          {event.start.dateTime ? formatDateTime(event.start.dateTime) : formatDate(event.start.date)}
-        </Text>
-      </Group>
-      <Collapse in={expandedEventId === event.id} transitionDuration={200}>
-        <Text
-          size="sm"
-          color="gray"
-          style={{
-            overflowWrap: 'break-word',
-          }}
-        >
-          {event.location || 'No Location Available'}
-        </Text>
-      </Collapse>
-    </Card>
+    <div key={event.id} style={{ width: '100%', maxWidth: 350 }}>
+      <Card
+        shadow="sm"
+        padding="lg"
+        radius="md"
+        withBorder
+        onClick={() => toggleExpanded(event.id)}
+        className="concert-card"
+        style={{
+          cursor: 'pointer',
+          width: '100%',
+          height: expandedEventId === event.id ? '100%' : '90px',
+          //maxHeight: expandedEventId === event.id ? '130px' : '90px',
+          transition: 'height 0.2s ease-in-out',
+          overflow: 'hidden',
+          backgroundColor: 'white',
+          color: 'rgb(59, 59, 59)'
+        }}
+      >
+        <Group position="apart" style={{ marginBottom: 5 }}>
+          <Text weight={500} style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            {event.summary || 'No Title'}
+          </Text>
+          <Text color="dimmed" size="sm" style={{ flex: 1, whiteSpace: 'wrap', marginLeft: 'auto' }}>
+            {event.start.dateTime ? formatDateTime(event.start.dateTime) : formatDate(event.start.date)}
+          </Text>
+        </Group>
+        <Collapse in={expandedEventId === event.id} transitionDuration={200}>
+          <Text
+            size="sm"
+            color="gray"
+            style={{
+              overflowWrap: 'break-word',
+            }}
+          >
+            {event.location || 'No Location Available'}
+          </Text>
+        </Collapse>
+      </Card>
+    </div>
   ));
 
   return (
