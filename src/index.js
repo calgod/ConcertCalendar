@@ -16,7 +16,6 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route index element={<App />} />
-        <Route path="concerts" element={<ConcertHistory />} />
       </Routes>
     </BrowserRouter>
   </MantineProvider>
