@@ -1,6 +1,5 @@
 import './App.css';
 import React from 'react';
-import { Link } from "react-router-dom";
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
