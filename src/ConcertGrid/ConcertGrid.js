@@ -29,7 +29,7 @@ function ConcertGrid() {
     async function fetchData() {
       const data = await fetchCalendarEvents();
       const today = new Date().toISOString();
-      const upcomingEvents = data.items.filter(event => {
+      const upcomingEvents = data.calendarEvents.items.filter(event => {
         const eventDate = event.start.dateTime || event.start.date;
         return eventDate >= today;
       });
