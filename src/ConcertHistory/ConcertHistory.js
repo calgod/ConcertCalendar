@@ -1,62 +1,139 @@
-import React, { useState, useEffect } from 'react';
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
-import { Card, Text, Group, SimpleGrid } from '@mantine/core';
-import { fetchCalendarEvents } from '../API/api';
+import React, { useState, useEffect, useRef } from "react";
+import { Text } from "@visx/text";
+import Wordcloud from "@visx/wordcloud/lib/Wordcloud";
+import { scaleLog } from "@visx/scale";
+import { fetchCalendarEvents } from "../API/api";
+import { Card } from "@mantine/core";
 
-function ConcertHistory() {
+const colors = ["#87CEFA", "#6B8E23", "#FF6F61"];
+
+function calculatePhraseFrequencies(phrases) {
+  const freqMap = {};
+
+  for (const phrase of phrases) {
+    const cleanedPhrase = phrase.trim().toLowerCase();
+    if (!cleanedPhrase) continue;
+    freqMap[cleanedPhrase] = (freqMap[cleanedPhrase] || 0) + 1;
+  }
+
+  return Object.keys(freqMap).map((phrase) => ({
+    text: phrase,
+    value: freqMap[phrase],
+  }));
+}
+
+export default function ConcertHistory() {
   const [events, setEvents] = useState([]);
+  const [dimensions, setDimensions] = useState({ width: 1500, height: 1000 });
+  const containerRef = useRef(null);
 
   useEffect(() => {
     async function fetchData() {
       const data = await fetchCalendarEvents();
-      const previousEvents = data.sheetData.values; // Assuming this is an array of arrays
-      setEvents(previousEvents.flat()); // Flatten the array to get all strings
+      const previousEvents = data.sheetData.values; 
+      setEvents(previousEvents.flat());
     }
 
     fetchData();
   }, []);
 
-  const rows = events.map((event, index) => (
-    <Card
-      key={index}
-      shadow="sm"
-      padding="lg"
-      radius="md"
-      withBorder
-      className="concert-card"
-      style={{
-        cursor: 'pointer',
-        width: '100%',
-        maxWidth: 350,
-        height: 'auto',
-        maxHeight: 90,
-        transition: 'all 0.2s ease',
-        overflow: 'hidden',
-        backgroundColor: 'white',
-        color: 'rgb(59, 59, 59)'
-      }}
-    >
-      <Group position="apart" style={{ marginBottom: 5 }}>
-        <Text weight={500} style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          {event}
-        </Text>
-      </Group>
-    </Card>
-  ));
+  useEffect(() => {
+    const handleResize = () => {
+      const windowWidth = window.innerWidth;
+      const windowHeight = window.innerHeight;
+      const maxHeight = 500;
+      const maxWidth = 1000;
+      
+      setDimensions({
+        width: Math.min(windowWidth * 0.9, maxWidth), 
+        height: Math.min(windowHeight * 0.9, maxHeight)
+      });
+    };
+  
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const phrases = calculatePhraseFrequencies(events);
+
+  const fontScale = scaleLog({
+    domain: [
+      Math.min(...phrases.map((p) => p.value)) || 1,
+      Math.max(...phrases.map((p) => p.value)) || 10,
+    ],
+    range: [8, Math.min(dimensions.width, dimensions.height) * 0.1],
+  });
+
+  const fontSizeSetter = (datum) => {
+    const size = fontScale(datum.value);
+    return Math.min(size, 100);
+  };
+
+  const fixedValueGenerator = () => 0.5;
 
   return (
-    <SimpleGrid
-      cols={4}
-      spacing="lg"
-      verticalSpacing="lg"
-      pt="lg"
+    <div
+      ref={containerRef} 
+      className="wordcloud-container w-full"
+      style={{ 
+        width: '100%', 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center',
+        margin: 0,
+        padding: 0
+      }}
     >
-      {rows}
-    </SimpleGrid>
+      <Card
+        style={{
+          padding: 0,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+      {phrases.length > 0 && (
+        <Wordcloud
+          words={phrases}
+          width={dimensions.width}
+          height={dimensions.height}
+          fontSize={fontSizeSetter}
+          font={"Roboto"}
+          padding={3}
+          spiral="rectangular"
+          rotate={0}
+          random={fixedValueGenerator}
+        >
+          {(cloudWords) =>
+            cloudWords.map((w, i) => (
+              <Text
+                key={w.text}
+                fill={colors[i % colors.length]}
+                textAnchor={"middle"}
+                transform={`translate(${w.x}, ${w.y})`}
+                fontSize={w.size}
+                fontFamily={w.font}
+              >
+                {w.text}
+              </Text>
+            ))
+          }
+        </Wordcloud>
+      )}
+      <style jsx>{`
+        .wordcloud-container {
+          margin: 0;
+          padding: 0;
+        }
+        .wordcloud-container svg {
+          margin: 0;
+          padding: 0;
+          cursor: pointer;
+          max-width: 100%;
+        }
+      `}</style>
+      </Card>
+    </div>
   );
 }
-
-export default ConcertHistory;

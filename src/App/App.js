@@ -40,6 +40,7 @@ function App() {
   
         <Tabs.Panel value="history">
           <div>
+            <Space h={30}></Space>
             <ConcertHistory></ConcertHistory>
           </div>     
         </Tabs.Panel>
