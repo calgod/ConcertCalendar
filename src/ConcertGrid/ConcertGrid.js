@@ -116,6 +116,7 @@ function ConcertGrid() {
       cols={{ base: 1, sm: 2, lg: 3 }}
       spacing={{ base: 10, sm: 'xl' }}
       verticalSpacing={{ base: 'md', sm: 'xl' }}
+      pt="lg" 
     >
       {rows}
     </SimpleGrid>

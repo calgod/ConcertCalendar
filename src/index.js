@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './index.css';
 import App from './App/App';
-import ConcertHistory from './ConcertHistory/ConcertHistory';
 import reportWebVitals from './reportWebVitals';
 import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css'; 
@@ -16,7 +15,6 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route index element={<App />} />
-        <Route path="concerts" element={<ConcertHistory />} />
       </Routes>
     </BrowserRouter>
   </MantineProvider>
