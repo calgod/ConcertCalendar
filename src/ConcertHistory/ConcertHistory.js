@@ -121,18 +121,6 @@ export default function ConcertHistory() {
           }
         </Wordcloud>
       )}
-      <style jsx>{`
-        .wordcloud-container {
-          margin: 0;
-          padding: 0;
-        }
-        .wordcloud-container svg {
-          margin: 0;
-          padding: 0;
-          cursor: pointer;
-          max-width: 100%;
-        }
-      `}</style>
       </Card>
     </div>
   );
