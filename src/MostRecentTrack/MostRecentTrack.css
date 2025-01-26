@@ -1,3 +1,7 @@
 .textDiv {
-    text-align: left;
+  text-align: left;
+}
+
+.cardDiv {
+  padding-top: 20px;
 }
