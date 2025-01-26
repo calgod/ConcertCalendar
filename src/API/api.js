@@ -12,3 +12,19 @@ export const fetchCalendarEvents = async () => {
         console.error("Error fetching calendar events: ", error);
     }
     };
+
+export const fetchLastFm = async () => {
+    try {
+        const response = await fetch(
+            `https://www.calgod.com/lastfm-api`
+        );
+        if (!response.ok) {
+            throw new Error('Failed to fetch events');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error fetching lastfm data: ", error);
+    }
+    };
+
