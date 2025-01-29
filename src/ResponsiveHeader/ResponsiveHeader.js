@@ -19,7 +19,8 @@ function ResponsiveHeader() {
         alt="Concert Calendar"
         style={{
           width: '100%',
-          maxWidth: isMobile ? '350px' : '900px'
+          maxWidth: isMobile ? '350px' : '900px',
+          maxHeight: '20vh'
         }}
       />
     </Box>

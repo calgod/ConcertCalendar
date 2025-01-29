@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   font-size: calc(10px + 2vmin);
 }
 
@@ -20,7 +20,27 @@
 
 .headerDiv {
   width: 100%;
-  height: fit-content;
+  max-height: 25vh;
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  margin-top: 30px;
+}
+
+.contentDiv {
+  padding: 16px;
+  padding-bottom: 50px;
+  width: 100%;
+  flex-grow: 1;
+  height: 75vh; /* Subtract header height from viewport */
+  margin-top: auto;
+  margin-bottom: auto;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
 }
 
 .link {

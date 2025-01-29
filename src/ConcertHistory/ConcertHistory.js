@@ -62,12 +62,12 @@ export default function ConcertHistory() {
       Math.min(...phrases.map((p) => p.value)) || 1,
       Math.max(...phrases.map((p) => p.value)) || 10,
     ],
-    range: [8, Math.min(dimensions.width, dimensions.height) * 0.1],
+    range: [12, Math.min(dimensions.width, dimensions.height) * 0.1],
   });
 
   const fontSizeSetter = (datum) => {
     const size = fontScale(datum.value);
-    return Math.min(size, 100);
+    return Math.min(size, 80);
   };
 
   const fixedValueGenerator = () => 0.5;
@@ -100,7 +100,7 @@ export default function ConcertHistory() {
           height={dimensions.height}
           fontSize={fontSizeSetter}
           font={"Roboto"}
-          padding={3}
+          padding={5}
           spiral="rectangular"
           rotate={0}
           random={fixedValueGenerator}
