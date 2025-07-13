@@ -31,7 +31,7 @@ const MostRecentTrack = () => {
     <div className='cardDiv'>
       <Card shadow="sm" padding="lg" radius="md" withBorder>
         {track ? (
-          <Group noWrap>
+          <Group wrap="nowrap">
             <Image
               src={track.image[2]['#text']}
               alt="Album Art"
