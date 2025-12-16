@@ -1,6 +1,6 @@
 import { Card, Text, Group, Collapse, SimpleGrid } from '@mantine/core';
 import { useState, useEffect } from 'react';
-import { fetchCalendarEvents } from '../API/api';
+import { fetchCalendarEvents } from '../../API/api';
 import './ConcertGrid.css';
 
 function ConcertGrid() {

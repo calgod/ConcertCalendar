@@ -1,7 +1,7 @@
 import { Box } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import desktopLogo from '../assets/cals_concert_calendar_lettering.svg';
-import mobileLogo from '../assets/cals_concert_calendar_lettering_mobile.svg';
+import desktopLogo from './assets/cals_concert_calendar_lettering.svg';
+import mobileLogo from './assets/cals_concert_calendar_lettering_mobile.svg';
 
 function ResponsiveHeader() {
   const isMobile = useMediaQuery('(max-width: 768px)');

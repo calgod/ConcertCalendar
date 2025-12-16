@@ -4,16 +4,16 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import ConcertGrid from '../ConcertGrid/ConcertGrid';
-import ResponsiveHeader from '../ResponsiveHeader/ResponsiveHeader';
-import ConcertHistory from '../ConcertHistory/ConcertHistory';
+import ConcertGrid from '../features/ConcertGrid/ConcertGrid';
+import ResponsiveHeader from '../features/ResponsiveHeader/ResponsiveHeader';
+import ConcertHistory from '../features/ConcertHistory/ConcertHistory';
+import MostRecentTrack from '../features/MostRecentTrack/MostRecentTrack';
 import { Space, Tabs, rem } from '@mantine/core';
 import {
   IconMusicPin,
   IconHistory,
   IconBrandLastfm,
 } from '@tabler/icons-react';
-import MostRecentTrack from '../MostRecentTrack/MostRecentTrack';
 
 function App() {
   const iconStyle = { width: rem(16), height: rem(16) };

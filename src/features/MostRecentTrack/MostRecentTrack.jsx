@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Group, Image, Text } from '@mantine/core';
 import './MostRecentTrack.css';
-import { fetchLastFm } from '../API/api';
+import { fetchLastFm } from '../../API/api';
 
 const MostRecentTrack = () => {
   const [track, setTrack] = useState(null);

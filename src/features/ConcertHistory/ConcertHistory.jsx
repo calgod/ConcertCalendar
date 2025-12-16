@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Text } from '@visx/text';
 import Wordcloud from '@visx/wordcloud/lib/Wordcloud';
 import { scaleLog } from '@visx/scale';
-import { fetchCalendarEvents } from '../API/api';
+import { fetchCalendarEvents } from '../../API/api';
 import { Card } from '@mantine/core';
 
 const colors = ['#87CEFA', '#6B8E23', '#FF6F61'];
