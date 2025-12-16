@@ -6,6 +6,7 @@
 [![Status](https://img.shields.io/badge/status-active-success.svg)](https://www.calgod.com/)
 
 ### Live Demo
+
 [Visit Cal's Concert Calendar](https://www.calgod.com/)
 
 ## Table of Contents
@@ -64,5 +65,3 @@ Open [http://localhost:4173](http://localhost:4173) to view the production build
 ## Contact
 
 Developed by [Cal Goddard](mailto:me@calgod.com).
-
-

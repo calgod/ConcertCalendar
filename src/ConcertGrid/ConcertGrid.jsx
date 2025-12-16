@@ -8,9 +8,9 @@ function ConcertGrid() {
   const [expandedEventId, setExpandedEventId] = useState(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const toggleExpanded = (id) => {
+  const toggleExpanded = id => {
     if (isTransitioning) return;
-    
+
     if (expandedEventId && expandedEventId !== id) {
       setIsTransitioning(true);
       // Collapse the current card
@@ -39,7 +39,7 @@ function ConcertGrid() {
     fetchData();
   }, []);
 
-  const formatDateTime = (dateString) => {
+  const formatDateTime = dateString => {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat('en-US', {
       timeZone: 'America/New_York',
@@ -51,14 +51,14 @@ function ConcertGrid() {
     }).format(date);
   };
 
-  const formatDate = (dateString) => {
+  const formatDate = dateString => {
     const date = new Date(Date.parse(dateString));
     return new Intl.DateTimeFormat('en-US', {
       timeZone: 'UTC',
       month: 'short',
       day: 'numeric',
       year: 'numeric',
-    }).format(date); 
+    }).format(date);
   };
 
   // Sort events by date in descending order
@@ -68,15 +68,15 @@ function ConcertGrid() {
     return dateA - dateB;
   });
 
-  const rows = events.map((event) => (
+  const rows = events.map(event => (
     <Card
       key={event.id}
-      shadow="sm"
-      padding="lg"
-      radius="md"
+      shadow='sm'
+      padding='lg'
+      radius='md'
       withBorder
       onClick={() => toggleExpanded(event.id)}
-      className="concert-card"
+      className='concert-card'
       style={{
         cursor: 'pointer',
         width: '100%',
@@ -86,21 +86,30 @@ function ConcertGrid() {
         transition: 'all 0.2s ease',
         overflow: 'hidden',
         backgroundColor: 'white',
-        color: 'rgb(59, 59, 59)'
+        color: 'rgb(59, 59, 59)',
       }}
     >
-      <Group position="apart" style={{ marginBottom: 5 }}>
-        <Text weight={500} style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Group position='apart' style={{ marginBottom: 5 }}>
+        <Text
+          weight={500}
+          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+        >
           {event.summary || 'No Title'}
         </Text>
-        <Text color="dimmed" size="sm" style={{ flex: 1, whiteSpace: 'wrap', marginLeft: 'auto' }}>
-          {event.start.dateTime ? formatDateTime(event.start.dateTime) : formatDate(event.start.date)}
+        <Text
+          color='dimmed'
+          size='sm'
+          style={{ flex: 1, whiteSpace: 'wrap', marginLeft: 'auto' }}
+        >
+          {event.start.dateTime
+            ? formatDateTime(event.start.dateTime)
+            : formatDate(event.start.date)}
         </Text>
       </Group>
       <Collapse in={expandedEventId === event.id} transitionDuration={200}>
         <Text
-          size="sm"
-          color="gray"
+          size='sm'
+          color='gray'
           style={{
             overflowWrap: 'break-word',
           }}
@@ -117,7 +126,7 @@ function ConcertGrid() {
         cols={{ base: 1, sm: 2, lg: 3 }}
         spacing={{ base: 10, sm: 'xl' }}
         verticalSpacing={{ base: 'md', sm: 'xl' }}
-        pt="lg" 
+        pt='lg'
       >
         {rows}
       </SimpleGrid>

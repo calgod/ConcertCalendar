@@ -7,20 +7,20 @@ function ResponsiveHeader() {
   const isMobile = useMediaQuery('(max-width: 768px)');
 
   return (
-    <Box 
-        sx={(theme) => ({
+    <Box
+      sx={theme => ({
         display: 'flex',
         justifyContent: 'center',
-        padding: '2rem'
-        })}
+        padding: '2rem',
+      })}
     >
-      <img 
+      <img
         src={isMobile ? mobileLogo : desktopLogo}
-        alt="Concert Calendar"
+        alt='Concert Calendar'
         style={{
           width: '100%',
           maxWidth: isMobile ? '350px' : '900px',
-          maxHeight: '20vh'
+          maxHeight: '20vh',
         }}
       />
     </Box>

@@ -8,7 +8,11 @@ import ConcertGrid from '../ConcertGrid/ConcertGrid';
 import ResponsiveHeader from '../ResponsiveHeader/ResponsiveHeader';
 import ConcertHistory from '../ConcertHistory/ConcertHistory';
 import { Space, Tabs, rem } from '@mantine/core';
-import {IconMusicPin, IconHistory, IconBrandLastfm} from '@tabler/icons-react';
+import {
+  IconMusicPin,
+  IconHistory,
+  IconBrandLastfm,
+} from '@tabler/icons-react';
 import MostRecentTrack from '../MostRecentTrack/MostRecentTrack';
 
 function App() {
@@ -20,42 +24,48 @@ function App() {
       <div className='headerDiv'>
         <ResponsiveHeader></ResponsiveHeader>
 
-      <Tabs defaultValue="upcoming">
-        <Tabs.List justify='center'>
-          <Tabs.Tab value="upcoming" leftSection={<IconMusicPin style={iconStyle} />}>
-            Upcoming
-          </Tabs.Tab>
-          <Tabs.Tab value="history" leftSection={<IconHistory style={iconStyle} />}>
-            History
-          </Tabs.Tab>
-          <Tabs.Tab value="recent" leftSection={<IconBrandLastfm style={iconStyle} />}>
-            Now Playing          
-          </Tabs.Tab>
-        </Tabs.List>
-        <div className="contentDiv">
+        <Tabs defaultValue='upcoming'>
+          <Tabs.List justify='center'>
+            <Tabs.Tab
+              value='upcoming'
+              leftSection={<IconMusicPin style={iconStyle} />}
+            >
+              Upcoming
+            </Tabs.Tab>
+            <Tabs.Tab
+              value='history'
+              leftSection={<IconHistory style={iconStyle} />}
+            >
+              History
+            </Tabs.Tab>
+            <Tabs.Tab
+              value='recent'
+              leftSection={<IconBrandLastfm style={iconStyle} />}
+            >
+              Now Playing
+            </Tabs.Tab>
+          </Tabs.List>
+          <div className='contentDiv'>
+            <Tabs.Panel value='upcoming'>
+              <div>
+                <ConcertGrid></ConcertGrid>
+              </div>
+            </Tabs.Panel>
 
-        <Tabs.Panel value="upcoming">
-          <div>
-            <ConcertGrid></ConcertGrid>
+            <Tabs.Panel value='history'>
+              <div>
+                <ConcertHistory></ConcertHistory>
+              </div>
+            </Tabs.Panel>
+
+            <Tabs.Panel value='recent'>
+              <div>
+                <MostRecentTrack></MostRecentTrack>
+              </div>
+            </Tabs.Panel>
           </div>
-        </Tabs.Panel>
-  
-        <Tabs.Panel value="history">
-          <div>
-            <ConcertHistory></ConcertHistory>
-          </div>     
-        </Tabs.Panel>
-
-        <Tabs.Panel value="recent">
-          <div>
-            <MostRecentTrack></MostRecentTrack>
-          </div>     
-        </Tabs.Panel>
-        </div>
-
-      </Tabs>
+        </Tabs>
       </div>
-
     </div>
   );
 }

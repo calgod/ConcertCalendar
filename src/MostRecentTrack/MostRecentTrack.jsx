@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Group, Image, Text } from '@mantine/core';
-import './MostRecentTrack.css'
+import './MostRecentTrack.css';
 import { fetchLastFm } from '../API/api';
 
 const MostRecentTrack = () => {
@@ -29,20 +29,28 @@ const MostRecentTrack = () => {
 
   return (
     <div className='cardDiv'>
-      <Card shadow="sm" padding="lg" radius="md" withBorder>
+      <Card shadow='sm' padding='lg' radius='md' withBorder>
         {track ? (
-          <Group wrap="nowrap">
+          <Group wrap='nowrap'>
             <Image
               src={track.image[2]['#text']}
-              alt="Album Art"
+              alt='Album Art'
               width={100}
               height={100}
-              radius="md"
+              radius='md'
             />
             <div className='textDiv'>
-              <Text weight={500}><strong>Track:</strong> {track.name}</Text>
-              <Text><strong>Artist:</strong> {track.artist['#text']}</Text>
-              {track.album['#text'] && <Text><strong>Album:</strong> {track.album['#text']}</Text>}
+              <Text weight={500}>
+                <strong>Track:</strong> {track.name}
+              </Text>
+              <Text>
+                <strong>Artist:</strong> {track.artist['#text']}
+              </Text>
+              {track.album['#text'] && (
+                <Text>
+                  <strong>Album:</strong> {track.album['#text']}
+                </Text>
+              )}
             </div>
           </Group>
         ) : (
