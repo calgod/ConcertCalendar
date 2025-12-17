@@ -1,25 +1,19 @@
 export const fetchCalendarEvents = async () => {
-  try {
-    const response = await fetch(`https://www.calgod.com/api`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch events');
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error fetching calendar events: ', error);
+  const response = await fetch('https://www.calgod.com/api');
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch calendar events');
   }
+
+  return response.json();
 };
 
 export const fetchLastFm = async () => {
-  try {
-    const response = await fetch(`https://www.calgod.com/lastfm-api`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch events');
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error fetching lastfm data: ', error);
+  const response = await fetch('https://www.calgod.com/lastfm-api');
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch lastfm data');
   }
+
+  return response.json();
 };

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Text } from '@visx/text';
+import { Text as VisxText } from '@visx/text';
 import Wordcloud from '@visx/wordcloud/lib/Wordcloud';
 import { scaleLog } from '@visx/scale';
-import { fetchCalendarEvents } from '../../API/api';
-import { Card } from '@mantine/core';
+import { Card, Text } from '@mantine/core';
+import { useSheetEvents } from '../../hooks/useSheetEvents';
 
 const colors = ['#87CEFA', '#6B8E23', '#FF6F61'];
 
@@ -23,19 +23,9 @@ function calculatePhraseFrequencies(phrases) {
 }
 
 export default function ConcertHistory() {
-  const [events, setEvents] = useState([]);
+  const { data: events = [], isLoading, isError, error } = useSheetEvents();
   const [dimensions, setDimensions] = useState({ width: 1500, height: 1000 });
   const containerRef = useRef(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      const data = await fetchCalendarEvents();
-      const previousEvents = data.sheetData.values;
-      setEvents(previousEvents.flat());
-    }
-
-    fetchData();
-  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -72,6 +62,9 @@ export default function ConcertHistory() {
 
   const fixedValueGenerator = () => 0.5;
 
+  if (isLoading) return <Text>Loading...</Text>;
+  if (isError) return <Text>Error: {error.message}</Text>;
+
   return (
     <div
       ref={containerRef}
@@ -107,7 +100,7 @@ export default function ConcertHistory() {
           >
             {cloudWords =>
               cloudWords.map((w, i) => (
-                <Text
+                <VisxText
                   key={w.text}
                   fill={colors[i % colors.length]}
                   textAnchor={'middle'}
@@ -116,7 +109,7 @@ export default function ConcertHistory() {
                   fontFamily={w.font}
                 >
                   {w.text}
-                </Text>
+                </VisxText>
               ))
             }
           </Wordcloud>

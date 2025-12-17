@@ -1,10 +1,10 @@
 import { Card, Text, Group, Collapse, SimpleGrid } from '@mantine/core';
-import { useState, useEffect } from 'react';
-import { fetchCalendarEvents } from '../../API/api';
+import { useState, useMemo } from 'react';
+import { useCalendarEvents } from '../../hooks/useCalendarEvents';
 import './ConcertGrid.css';
 
 function ConcertGrid() {
-  const [events, setEvents] = useState([]);
+  const { data, isLoading, isError, error } = useCalendarEvents();
   const [expandedEventId, setExpandedEventId] = useState(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
@@ -13,7 +13,6 @@ function ConcertGrid() {
 
     if (expandedEventId && expandedEventId !== id) {
       setIsTransitioning(true);
-      // Collapse the current card
       setExpandedEventId(null);
       // Wait for collapse animation to finish before expanding new card
       setTimeout(() => {
@@ -25,19 +24,26 @@ function ConcertGrid() {
     }
   };
 
-  useEffect(() => {
-    async function fetchData() {
-      const data = await fetchCalendarEvents();
-      const today = new Date().toISOString();
-      const upcomingEvents = data.calendarEvents.items.filter(event => {
-        const eventDate = event.start.dateTime || event.start.date;
-        return eventDate >= today;
-      });
-      setEvents(upcomingEvents);
+  const getEventStart = event => {
+    if (event.start.date) {
+      const [y, m, d] = event.start.date.split('-').map(Number);
+      return new Date(y, m - 1, d);
     }
+    return new Date(event.start.dateTime);
+  };
 
-    fetchData();
-  }, []);
+  const events = useMemo(() => {
+    if (!data) return [];
+
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
+
+    return data
+      .map(event => ({ event, start: getEventStart(event) }))
+      .filter(({ start }) => start >= startOfToday)
+      .sort((a, b) => a.start - b.start)
+      .map(({ event }) => event);
+  }, [data]);
 
   const formatDateTime = dateString => {
     const date = new Date(dateString);
@@ -61,12 +67,8 @@ function ConcertGrid() {
     }).format(date);
   };
 
-  // Sort events by date in descending order
-  events.sort((a, b) => {
-    const dateA = new Date(a.start.dateTime || a.start.date);
-    const dateB = new Date(b.start.dateTime || b.start.date);
-    return dateA - dateB;
-  });
+  if (isLoading) return <Text>Loading events...</Text>;
+  if (isError) return <Text>Error: {error.message}</Text>;
 
   const rows = events.map(event => (
     <Card
@@ -97,7 +99,7 @@ function ConcertGrid() {
           {event.summary || 'No Title'}
         </Text>
         <Text
-          color='dimmed'
+          c='dimmed'
           size='sm'
           style={{ flex: 1, whiteSpace: 'wrap', marginLeft: 'auto' }}
         >
