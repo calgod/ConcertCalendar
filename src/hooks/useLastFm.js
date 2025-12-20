@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchLastFm } from '../API/api';
+import { fetchLastFm } from '../api/api';
 
 export function useLastFm() {
   return useQuery({

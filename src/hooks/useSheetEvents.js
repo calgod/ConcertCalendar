@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchCalendarEvents } from '../API/api';
+import { fetchCalendarEvents } from '../api/api';
 
 export function useSheetEvents() {
   return useQuery({
