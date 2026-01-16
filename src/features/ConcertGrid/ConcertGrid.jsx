@@ -1,19 +1,18 @@
 import { Card, Text, Group, Collapse, SimpleGrid } from '@mantine/core';
-import { useState, useEffect } from 'react';
-import { fetchCalendarEvents } from '../API/api';
+import { useState, useMemo } from 'react';
+import { useCalendarEvents } from '../../hooks/useCalendarEvents';
 import './ConcertGrid.css';
 
 function ConcertGrid() {
-  const [events, setEvents] = useState([]);
+  const { data, isLoading, isError, error } = useCalendarEvents();
   const [expandedEventId, setExpandedEventId] = useState(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const toggleExpanded = (id) => {
+  const toggleExpanded = id => {
     if (isTransitioning) return;
-    
+
     if (expandedEventId && expandedEventId !== id) {
       setIsTransitioning(true);
-      // Collapse the current card
       setExpandedEventId(null);
       // Wait for collapse animation to finish before expanding new card
       setTimeout(() => {
@@ -25,21 +24,28 @@ function ConcertGrid() {
     }
   };
 
-  useEffect(() => {
-    async function fetchData() {
-      const data = await fetchCalendarEvents();
-      const today = new Date().toISOString();
-      const upcomingEvents = data.calendarEvents.items.filter(event => {
-        const eventDate = event.start.dateTime || event.start.date;
-        return eventDate >= today;
-      });
-      setEvents(upcomingEvents);
+  const getEventStart = event => {
+    if (event.start.date) {
+      const [y, m, d] = event.start.date.split('-').map(Number);
+      return new Date(y, m - 1, d);
     }
+    return new Date(event.start.dateTime);
+  };
 
-    fetchData();
-  }, []);
+  const events = useMemo(() => {
+    if (!data) return [];
 
-  const formatDateTime = (dateString) => {
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
+
+    return data
+      .map(event => ({ event, start: getEventStart(event) }))
+      .filter(({ start }) => start >= startOfToday)
+      .sort((a, b) => a.start - b.start)
+      .map(({ event }) => event);
+  }, [data]);
+
+  const formatDateTime = dateString => {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat('en-US', {
       timeZone: 'America/New_York',
@@ -51,32 +57,28 @@ function ConcertGrid() {
     }).format(date);
   };
 
-  const formatDate = (dateString) => {
+  const formatDate = dateString => {
     const date = new Date(Date.parse(dateString));
     return new Intl.DateTimeFormat('en-US', {
       timeZone: 'UTC',
       month: 'short',
       day: 'numeric',
       year: 'numeric',
-    }).format(date); 
+    }).format(date);
   };
 
-  // Sort events by date in descending order
-  events.sort((a, b) => {
-    const dateA = new Date(a.start.dateTime || a.start.date);
-    const dateB = new Date(b.start.dateTime || b.start.date);
-    return dateA - dateB;
-  });
+  if (isLoading) return <Text>Loading events...</Text>;
+  if (isError) return <Text>Error: {error.message}</Text>;
 
-  const rows = events.map((event) => (
+  const rows = events.map(event => (
     <Card
       key={event.id}
-      shadow="sm"
-      padding="lg"
-      radius="md"
+      shadow='sm'
+      padding='lg'
+      radius='md'
       withBorder
       onClick={() => toggleExpanded(event.id)}
-      className="concert-card"
+      className='concert-card'
       style={{
         cursor: 'pointer',
         width: '100%',
@@ -86,21 +88,30 @@ function ConcertGrid() {
         transition: 'all 0.2s ease',
         overflow: 'hidden',
         backgroundColor: 'white',
-        color: 'rgb(59, 59, 59)'
+        color: 'rgb(59, 59, 59)',
       }}
     >
-      <Group position="apart" style={{ marginBottom: 5 }}>
-        <Text weight={500} style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Group position='apart' style={{ marginBottom: 5 }}>
+        <Text
+          weight={500}
+          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+        >
           {event.summary || 'No Title'}
         </Text>
-        <Text color="dimmed" size="sm" style={{ flex: 1, whiteSpace: 'wrap', marginLeft: 'auto' }}>
-          {event.start.dateTime ? formatDateTime(event.start.dateTime) : formatDate(event.start.date)}
+        <Text
+          c='dimmed'
+          size='sm'
+          style={{ flex: 1, whiteSpace: 'wrap', marginLeft: 'auto' }}
+        >
+          {event.start.dateTime
+            ? formatDateTime(event.start.dateTime)
+            : formatDate(event.start.date)}
         </Text>
       </Group>
       <Collapse in={expandedEventId === event.id} transitionDuration={200}>
         <Text
-          size="sm"
-          color="gray"
+          size='sm'
+          color='gray'
           style={{
             overflowWrap: 'break-word',
           }}
@@ -117,7 +128,7 @@ function ConcertGrid() {
         cols={{ base: 1, sm: 2, lg: 3 }}
         spacing={{ base: 10, sm: 'xl' }}
         verticalSpacing={{ base: 'md', sm: 'xl' }}
-        pt="lg" 
+        pt='lg'
       >
         {rows}
       </SimpleGrid>

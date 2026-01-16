@@ -1,26 +1,26 @@
 import { Box } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import desktopLogo from '../assets/cals_concert_calendar_lettering.svg';
-import mobileLogo from '../assets/cals_concert_calendar_lettering_mobile.svg';
+import desktopLogo from './assets/cals_concert_calendar_lettering.svg';
+import mobileLogo from './assets/cals_concert_calendar_lettering_mobile.svg';
 
 function ResponsiveHeader() {
   const isMobile = useMediaQuery('(max-width: 768px)');
 
   return (
-    <Box 
-        sx={(theme) => ({
+    <Box
+      sx={theme => ({
         display: 'flex',
         justifyContent: 'center',
-        padding: '2rem'
-        })}
+        padding: '2rem',
+      })}
     >
-      <img 
+      <img
         src={isMobile ? mobileLogo : desktopLogo}
-        alt="Concert Calendar"
+        alt='Concert Calendar'
         style={{
           width: '100%',
           maxWidth: isMobile ? '350px' : '900px',
-          maxHeight: '20vh'
+          maxHeight: '20vh',
         }}
       />
     </Box>
