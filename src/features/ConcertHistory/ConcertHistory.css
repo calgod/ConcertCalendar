@@ -1,33 +1,55 @@
 .wordcloud-container {
-  margin: 0;
-  padding: 0;
-}
-
-.wordcloud-container svg {
-  margin: 0;
-  padding: 0;
-  cursor: pointer;
-  max-width: 100%;
-}
-
-.wordcloud {
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  user-select: none;
+  justify-content: center;
 }
 
-.wordcloud svg {
-  margin: 1rem 0;
-  cursor: pointer;
-}
-
-.wordcloud label {
-  display: inline-flex;
+.wordcloud-card {
+  width: min(100%, 1020px);
+  box-sizing: border-box;
+  padding: 0.4rem;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  font-size: 14px;
-  margin-right: 8px;
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
 }
 
-.wordcloud textarea {
-  min-height: 100px;
+.wordcloud-stage {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.wordcloud-stage-hidden {
+  opacity: 0;
+}
+
+.wordcloud-stage-visible {
+  opacity: 1;
+}
+
+.wordcloud-loading {
+  position: absolute;
+  top: 0.85rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.wordcloud-stage > svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
+  border-radius: inherit;
+}
+
+@media (max-width: 48em) {
+  .wordcloud-card {
+    padding: 0.2rem;
+  }
 }

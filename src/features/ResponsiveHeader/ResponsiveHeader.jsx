@@ -8,11 +8,11 @@ function ResponsiveHeader() {
 
   return (
     <Box
-      sx={theme => ({
+      style={{
         display: 'flex',
         justifyContent: 'center',
-        padding: '2rem',
-      })}
+        padding: '1rem 1rem 1.5rem',
+      }}
     >
       <img
         src={isMobile ? mobileLogo : desktopLogo}

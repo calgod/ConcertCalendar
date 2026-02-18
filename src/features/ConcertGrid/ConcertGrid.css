@@ -6,6 +6,81 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
+.concert-card:focus-visible {
+  outline: 2px solid #1f6aa0;
+  outline-offset: 2px;
+}
+
+.concert-grid-container {
+  width: 100%;
+  gap: 0.75rem;
+}
+
+.concert-grid-shell {
+  --card-max-width: 350px;
+  --grid-gap: 20px;
+  width: min(100%, var(--card-max-width));
+  margin-inline: auto;
+}
+
+.concert-toolbar {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.concert-toolbar-layout {
+  width: 100%;
+}
+
+.concert-toolbar-copy {
+  text-align: left;
+}
+
+.concert-search {
+  width: min(100%, 360px);
+  margin-left: auto;
+}
+
 .simpleGridDiv {
-  height: 100%;
+  width: 100%;
+}
+
+.no-events-text {
+  padding-top: 2rem;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .concert-toolbar-layout {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .concert-toolbar-copy {
+    width: 100%;
+  }
+
+  .concert-search {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 48em) {
+  .concert-grid-shell {
+    width: min(
+      100%,
+      calc((var(--card-max-width) * 2) + var(--grid-gap))
+    );
+  }
+}
+
+@media (min-width: 75em) {
+  .concert-grid-shell {
+    width: min(
+      100%,
+      calc((var(--card-max-width) * 3) + (var(--grid-gap) * 2))
+    );
+  }
 }

@@ -8,64 +8,77 @@ import ConcertGrid from '../features/ConcertGrid/ConcertGrid';
 import ResponsiveHeader from '../features/ResponsiveHeader/ResponsiveHeader';
 import ConcertHistory from '../features/ConcertHistory/ConcertHistory';
 import MostRecentTrack from '../features/MostRecentTrack/MostRecentTrack';
-import { Space, Tabs, rem } from '@mantine/core';
+import { Tabs, rem } from '@mantine/core';
 import {
   IconMusicPin,
   IconHistory,
   IconBrandLastfm,
 } from '@tabler/icons-react';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+const tabs = [
+  {
+    value: 'upcoming',
+    label: 'Upcoming',
+    icon: IconMusicPin,
+    panel: <ConcertGrid />,
+  },
+  {
+    value: 'history',
+    label: 'History',
+    icon: IconHistory,
+    panel: <ConcertHistory />,
+  },
+  {
+    value: 'nowplaying',
+    label: 'Now Playing',
+    icon: IconBrandLastfm,
+    panel: <MostRecentTrack />,
+  },
+];
 
 function App() {
   const iconStyle = { width: rem(16), height: rem(16) };
+  const navigate = useNavigate();
+  const location = useLocation();
+  const currentPath = location.pathname.split('/')[1];
+  const activeTab = tabs.some(tab => tab.value === currentPath)
+    ? currentPath
+    : 'upcoming';
 
   return (
-    <div className='App'>
-      <Space h={30}></Space>
-      <div className='headerDiv'>
-        <ResponsiveHeader></ResponsiveHeader>
+    <div className='app-shell'>
+      <header className='app-header'>
+        <ResponsiveHeader />
+      </header>
 
-        <Tabs defaultValue='upcoming'>
-          <Tabs.List justify='center'>
+      <Tabs
+        value={activeTab}
+        onChange={value => {
+          if (!value || value === activeTab) return;
+          navigate(`/${value}`);
+        }}
+        className='app-tabs'
+      >
+        <Tabs.List justify='center'>
+          {tabs.map(({ value, label, icon: Icon }) => (
             <Tabs.Tab
-              value='upcoming'
-              leftSection={<IconMusicPin style={iconStyle} />}
+              key={value}
+              value={value}
+              leftSection={<Icon style={iconStyle} />}
             >
-              Upcoming
+              {label}
             </Tabs.Tab>
-            <Tabs.Tab
-              value='history'
-              leftSection={<IconHistory style={iconStyle} />}
-            >
-              History
-            </Tabs.Tab>
-            <Tabs.Tab
-              value='recent'
-              leftSection={<IconBrandLastfm style={iconStyle} />}
-            >
-              Now Playing
-            </Tabs.Tab>
-          </Tabs.List>
-          <div className='contentDiv'>
-            <Tabs.Panel value='upcoming'>
-              <div>
-                <ConcertGrid></ConcertGrid>
-              </div>
+          ))}
+        </Tabs.List>
+        <main className='contentDiv'>
+          {tabs.map(({ value, panel }) => (
+            <Tabs.Panel key={value} value={value}>
+              {panel}
             </Tabs.Panel>
-
-            <Tabs.Panel value='history'>
-              <div>
-                <ConcertHistory></ConcertHistory>
-              </div>
-            </Tabs.Panel>
-
-            <Tabs.Panel value='recent'>
-              <div>
-                <MostRecentTrack></MostRecentTrack>
-              </div>
-            </Tabs.Panel>
-          </div>
-        </Tabs>
-      </div>
+          ))}
+        </main>
+      </Tabs>
     </div>
   );
 }

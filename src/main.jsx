@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './main.css';
 import App from './app/App';
 import { MantineProvider } from '@mantine/core';
@@ -25,7 +25,11 @@ root.render(
       <MantineProvider>
         <BrowserRouter>
           <Routes>
-            <Route index element={<App />} />
+            <Route path='/' element={<Navigate to='/upcoming' replace />} />
+            <Route path='/upcoming' element={<App />} />
+            <Route path='/history' element={<App />} />
+            <Route path='/nowplaying' element={<App />} />
+            <Route path='*' element={<Navigate to='/upcoming' replace />} />
           </Routes>
         </BrowserRouter>
 

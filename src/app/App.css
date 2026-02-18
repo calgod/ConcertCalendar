@@ -1,50 +1,28 @@
-.App {
+.app-shell {
   text-align: center;
-  background-color: #f3d2d2;
   min-height: 100vh;
-  min-width: 100vw;
+  width: 100%;
+  background-color: #f3d2d2;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  font-size: calc(10px + 2vmin);
-}
-
-.pageHeader {
-  font-size: larger;
-  font-weight: 500;
-  color: rgb(0, 0, 0);
-  text-shadow: rgb(123, 191, 255) 1px 5px 5px;
-  font-family: 'Roboto';
-}
-
-.headerDiv {
-  width: 100%;
-  max-height: 25vh;
-  position: fixed;
-  top: 0;
-  z-index: 1;
-  margin-top: 30px;
-}
-
-.contentDiv {
-  padding: 16px;
-  padding-bottom: 50px;
-  width: 100%;
-  flex-grow: 1;
-  height: 75vh; /* Subtract header height from viewport */
-  margin-top: auto;
-  margin-bottom: auto;
-  overflow: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+  padding: 1rem 1rem 2rem;
   box-sizing: border-box;
 }
 
-.link {
-  font-size: large;
-  font-family: 'Roboto';
-  color: rgb(216, 151, 0);
+.app-header {
+  width: 100%;
+  max-width: 960px;
+}
+
+.app-tabs {
+  width: 100%;
+  max-width: 1100px;
+}
+
+.contentDiv {
+  padding: 1rem 0.5rem 2.5rem;
+  width: 100%;
+  max-width: 1100px;
+  box-sizing: border-box;
 }
