@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Text as VisxText } from '@visx/text';
-import Wordcloud from '@visx/wordcloud/lib/Wordcloud';
+import { Wordcloud } from '@visx/wordcloud';
 import { scaleLog } from '@visx/scale';
 import { Card, Text } from '@mantine/core';
 import { useSheetEvents } from '../../hooks/useSheetEvents';

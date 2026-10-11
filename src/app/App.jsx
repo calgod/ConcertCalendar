@@ -24,7 +24,7 @@ function App() {
       <div className='headerDiv'>
         <ResponsiveHeader></ResponsiveHeader>
 
-        <Tabs defaultValue='upcoming'>
+        <Tabs defaultValue='upcoming' keepMountedMode='display-none'>
           <Tabs.List justify='center'>
             <Tabs.Tab
               value='upcoming'

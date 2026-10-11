@@ -108,10 +108,13 @@ function ConcertGrid() {
             : formatDate(event.start.date)}
         </Text>
       </Group>
-      <Collapse in={expandedEventId === event.id} transitionDuration={200}>
+      <Collapse
+        expanded={expandedEventId === event.id}
+        transitionDuration={200}
+      >
         <Text
           size='sm'
-          color='gray'
+          c='gray'
           style={{
             overflowWrap: 'break-word',
           }}
