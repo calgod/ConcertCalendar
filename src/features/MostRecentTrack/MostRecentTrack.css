@@ -2,6 +2,12 @@
   text-align: left;
 }
 
+/* Mantine 9 removed `flex: 0` from Image. Inside Group, `width: 100%` then
+   stretches the cover. This restores the Mantine 7 flex basis. */
+.albumArt {
+  flex: 0;
+}
+
 .cardDiv {
   padding-top: 20px;
 }
