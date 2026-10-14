@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://www.calgod.com",
   "engines": {
-    "node": ">=22.12.0"
+    "node": "^20.19.0 || >=22.12.0"
   },
   "dependencies": {
     "@fontsource/roboto": "^5.3.0",
@@ -19,11 +19,8 @@
     "@visx/text": "^4.0.0",
     "@visx/wordcloud": "^4.0.0",
     "clsx": "^2.1.1",
-    "googleapis": "^185.0.0",
-    "moment-timezone": "^0.6.5",
     "react": "^19.3.0",
-    "react-dom": "^19.3.0",
-    "react-google-calendar-api": "^2.3.0"
+    "react-dom": "^19.3.0"
   },
   "scripts": {
     "dev": "vite",

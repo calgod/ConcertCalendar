@@ -8,8 +8,6 @@ import '@mantine/core/styles.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-// Mantine 9 changes the default radius (sm -> md) and medium font weight
-// (500 -> 600). Pin the previous values so existing components look the same.
 const theme = createTheme({
   defaultRadius: 'sm',
   fontWeights: {
