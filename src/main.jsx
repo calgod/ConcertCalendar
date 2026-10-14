@@ -6,7 +6,10 @@ import App from './app/App';
 import { MantineProvider, createTheme } from '@mantine/core';
 import '@mantine/core/styles.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+const ReactQueryDevtools = import.meta.env.DEV
+  ? (await import('@tanstack/react-query-devtools')).ReactQueryDevtools
+  : null;
 
 const theme = createTheme({
   defaultRadius: 'sm',
@@ -36,7 +39,7 @@ root.render(
           </Routes>
         </BrowserRouter>
 
-        {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
+        {ReactQueryDevtools && <ReactQueryDevtools initialIsOpen={false} />}
       </MantineProvider>
     </QueryClientProvider>
   </React.StrictMode>,

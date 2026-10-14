@@ -15,12 +15,15 @@
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
     "@testing-library/user-event": "^14.6.7",
+    "@vitejs/plugin-react": "^6.1.2",
     "@visx/scale": "^4.0.0",
     "@visx/text": "^4.0.0",
     "@visx/wordcloud": "^4.0.0",
     "clsx": "^2.1.1",
     "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "react-dom": "^19.3.0",
+    "react-router": "^7.18.4",
+    "vite": "^8.3.4"
   },
   "scripts": {
     "dev": "vite",
@@ -47,9 +50,6 @@
   },
   "devDependencies": {
     "@tanstack/react-query-devtools": "^5.104.1",
-    "@vitejs/plugin-react": "^6.1.2",
-    "prettier": "3.9.10",
-    "react-router": "^7.18.4",
-    "vite": "^8.3.4"
+    "prettier": "3.9.10"
   }
 }
