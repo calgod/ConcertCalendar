@@ -1,12 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router';
 import './main.css';
 import App from './app/App';
-import { MantineProvider } from '@mantine/core';
+import { MantineProvider, createTheme } from '@mantine/core';
 import '@mantine/core/styles.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+const ReactQueryDevtools = import.meta.env.DEV
+  ? (await import('@tanstack/react-query-devtools')).ReactQueryDevtools
+  : null;
+
+const theme = createTheme({
+  defaultRadius: 'sm',
+  fontWeights: {
+    medium: '500',
+  },
+});
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,14 +32,14 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <MantineProvider>
+      <MantineProvider theme={theme}>
         <BrowserRouter>
           <Routes>
             <Route index element={<App />} />
           </Routes>
         </BrowserRouter>
 
-        {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
+        {ReactQueryDevtools && <ReactQueryDevtools initialIsOpen={false} />}
       </MantineProvider>
     </QueryClientProvider>
   </React.StrictMode>,
