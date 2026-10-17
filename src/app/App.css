@@ -48,3 +48,39 @@
   font-family: 'Roboto';
   color: rgb(216, 151, 0);
 }
+
+@media (max-width: 768px) {
+  .headerDiv {
+    display: flex;
+    flex-direction: column;
+    max-height: none;
+    height: calc(100vh - 30px);
+    height: calc(100dvh - 30px);
+    overflow: hidden;
+  }
+
+  .headerDiv > :first-child {
+    flex-shrink: 0;
+  }
+
+  .headerDiv .concertTabs {
+    --tabs-display: flex;
+    --tabs-flex-direction: column;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .headerDiv .concertTabs > :first-child {
+    flex-shrink: 0;
+  }
+
+  .contentDiv {
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}

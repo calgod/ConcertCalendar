@@ -24,7 +24,11 @@ function App() {
       <div className='headerDiv'>
         <ResponsiveHeader></ResponsiveHeader>
 
-        <Tabs defaultValue='upcoming' keepMountedMode='display-none'>
+        <Tabs
+          className='concertTabs'
+          defaultValue='upcoming'
+          keepMountedMode='display-none'
+        >
           <Tabs.List justify='center'>
             <Tabs.Tab
               value='upcoming'
