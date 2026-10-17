@@ -13,6 +13,7 @@ const MostRecentTrack = () => {
       <Card shadow='sm' padding='lg' radius='md' withBorder>
         <Group wrap='nowrap'>
           <Image
+            className='albumArt'
             src={track.image[2]['#text']}
             alt='Album Art'
             width={100}
