@@ -9,3 +9,13 @@
 .simpleGridDiv {
   height: 100%;
 }
+
+.concert-location {
+  color: inherit;
+  text-decoration: none;
+}
+
+.concert-location:hover,
+.concert-location:active {
+  text-decoration: underline;
+}
