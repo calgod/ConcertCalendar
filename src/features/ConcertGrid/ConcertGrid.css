@@ -1,11 +1,58 @@
-.concert-card {
-  transition: box-shadow 0.2s ease;
+div.concert-card {
+  cursor: pointer;
+  width: 100%;
+  max-width: 350px;
+  height: auto;
+  max-height: 90px;
+  transition: all 0.2s ease;
+  overflow: hidden;
+  background-color: white;
+  color: rgb(59, 59, 59);
 }
 
-.concert-card:hover {
+div.concert-card.expanded {
+  max-height: 500px;
+}
+
+div.concert-card:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.concert-card-heading {
+  margin-bottom: 5px;
+}
+
+.concert-card-title {
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.concert-card-date {
+  flex: 1;
+  white-space: wrap;
+  margin-left: auto;
+}
+
+.concert-card-location {
+  overflow-wrap: break-word;
 }
 
 .simpleGridDiv {
   height: 100%;
+}
+
+a.concert-location {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.concert-location:hover,
+a.concert-location:active {
+  text-decoration: underline;
+}
+
+.concert-location-pin {
+  vertical-align: text-bottom;
+  margin-right: 4px;
 }
