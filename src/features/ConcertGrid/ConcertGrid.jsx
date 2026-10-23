@@ -82,31 +82,17 @@ function ConcertGrid() {
         radius='md'
         withBorder
         onClick={() => toggleExpanded(event.id)}
-        className='concert-card'
-        style={{
-          cursor: 'pointer',
-          width: '100%',
-          maxWidth: 350,
-          height: 'auto',
-          maxHeight: expandedEventId === event.id ? 500 : 90,
-          transition: 'all 0.2s ease',
-          overflow: 'hidden',
-          backgroundColor: 'white',
-          color: 'rgb(59, 59, 59)',
-        }}
+        className={
+          expandedEventId === event.id
+            ? 'concert-card expanded'
+            : 'concert-card'
+        }
       >
-        <Group position='apart' style={{ marginBottom: 5 }}>
-          <Text
-            weight={500}
-            style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-          >
+        <Group position='apart' className='concert-card-heading'>
+          <Text weight={500} className='concert-card-title'>
             {event.summary || 'No Title'}
           </Text>
-          <Text
-            c='dimmed'
-            size='sm'
-            style={{ flex: 1, whiteSpace: 'wrap', marginLeft: 'auto' }}
-          >
+          <Text c='dimmed' size='sm' className='concert-card-date'>
             {event.start.dateTime
               ? formatDateTime(event.start.dateTime)
               : formatDate(event.start.date)}
@@ -116,13 +102,7 @@ function ConcertGrid() {
           expanded={expandedEventId === event.id}
           transitionDuration={200}
         >
-          <Text
-            size='sm'
-            c='gray'
-            style={{
-              overflowWrap: 'break-word',
-            }}
-          >
+          <Text size='sm' c='gray' className='concert-card-location'>
             {location ? (
               <a
                 className='concert-location'
@@ -131,10 +111,7 @@ function ConcertGrid() {
                 rel='noopener noreferrer'
                 onClick={e => e.stopPropagation()}
               >
-                <IconMapPin
-                  size={14}
-                  style={{ verticalAlign: 'text-bottom', marginRight: 4 }}
-                />
+                <IconMapPin size={14} className='concert-location-pin' />
                 {location}
               </a>
             ) : (
