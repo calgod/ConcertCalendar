@@ -4,8 +4,13 @@ import { Wordcloud } from '@visx/wordcloud';
 import { scaleLog } from '@visx/scale';
 import { Card, Text } from '@mantine/core';
 import { useSheetEvents } from '../../hooks/useSheetEvents';
+import './ConcertHistory.css';
 
-const colors = ['#87CEFA', '#6B8E23', '#FF6F61'];
+const colors = [
+  'var(--mantine-color-rose-5)',
+  'var(--mantine-color-rose-7)',
+  'var(--mantine-color-rose-9)',
+];
 
 function calculatePhraseFrequencies(phrases) {
   const freqMap = {};

@@ -1,4 +1,4 @@
-import { Card, Text, Group, Collapse, SimpleGrid } from '@mantine/core';
+import { Card, Text, Collapse, SimpleGrid } from '@mantine/core';
 import { IconMapPin } from '@tabler/icons-react';
 import { useState, useMemo } from 'react';
 import { useCalendarEvents } from '../../hooks/useCalendarEvents';
@@ -73,36 +73,37 @@ function ConcertGrid() {
 
   const rows = events.map(event => {
     const location = event.location?.trim();
+    const expanded = expandedEventId === event.id;
+    const dateParts = getDateParts(event);
+    const fullDate = event.start.dateTime
+      ? formatDateTime(event.start.dateTime)
+      : formatDate(event.start.date);
 
     return (
       <Card
         key={event.id}
         shadow='sm'
-        padding='lg'
         radius='md'
         withBorder
         onClick={() => toggleExpanded(event.id)}
-        className={
-          expandedEventId === event.id
-            ? 'concert-card expanded'
-            : 'concert-card'
-        }
+        className={expanded ? 'concert-card expanded' : 'concert-card'}
       >
-        <Group position='apart' className='concert-card-heading'>
-          <Text weight={500} className='concert-card-title'>
-            {event.summary || 'No Title'}
-          </Text>
-          <Text c='dimmed' size='sm' className='concert-card-date'>
-            {event.start.dateTime
-              ? formatDateTime(event.start.dateTime)
-              : formatDate(event.start.date)}
-          </Text>
-        </Group>
-        <Collapse
-          expanded={expandedEventId === event.id}
-          transitionDuration={200}
-        >
-          <Text size='sm' c='gray' className='concert-card-location'>
+        <div className='concert-card-main'>
+          <div className='concert-date-badge' title={fullDate}>
+            <span className='concert-date-month'>{dateParts.month}</span>
+            <span className='concert-date-day'>{dateParts.day}</span>
+          </div>
+          <div className='concert-card-copy'>
+            <Text className='concert-card-title'>
+              {event.summary || 'No Title'}
+            </Text>
+            <Text className='concert-card-time'>
+              {dateParts.time} · {dateParts.year}
+            </Text>
+          </div>
+        </div>
+        <Collapse expanded={expanded} transitionDuration={200}>
+          <Text className='concert-card-location'>
             {location ? (
               <a
                 className='concert-location'
@@ -135,6 +136,35 @@ function ConcertGrid() {
       </SimpleGrid>
     </div>
   );
+}
+
+function getDateParts(event) {
+  const hasTime = Boolean(event.start.dateTime);
+  const date = hasTime
+    ? new Date(event.start.dateTime)
+    : new Date(Date.parse(event.start.date));
+  const timeZone = hasTime ? 'America/New_York' : 'UTC';
+  const month = new Intl.DateTimeFormat('en-US', {
+    timeZone,
+    month: 'short',
+  }).format(date);
+  const day = new Intl.DateTimeFormat('en-US', {
+    timeZone,
+    day: 'numeric',
+  }).format(date);
+  const year = new Intl.DateTimeFormat('en-US', {
+    timeZone,
+    year: 'numeric',
+  }).format(date);
+  const time = hasTime
+    ? new Intl.DateTimeFormat('en-US', {
+        timeZone,
+        hour: 'numeric',
+        minute: '2-digit',
+      }).format(date)
+    : 'All day';
+
+  return { month, day, time, year };
 }
 
 export default ConcertGrid;

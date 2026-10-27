@@ -3,20 +3,14 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router';
 import './main.css';
 import App from './app/App';
-import { MantineProvider, createTheme } from '@mantine/core';
+import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { theme } from './theme';
 
 const ReactQueryDevtools = import.meta.env.DEV
   ? (await import('@tanstack/react-query-devtools')).ReactQueryDevtools
   : null;
-
-const theme = createTheme({
-  defaultRadius: 'sm',
-  fontWeights: {
-    medium: '500',
-  },
-});
 
 const queryClient = new QueryClient({
   defaultOptions: {
