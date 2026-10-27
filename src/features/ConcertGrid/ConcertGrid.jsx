@@ -1,11 +1,4 @@
-import {
-  Card,
-  Text,
-  Group,
-  Collapse,
-  SimpleGrid,
-  Skeleton,
-} from '@mantine/core';
+import { Card, Text, Group, Collapse, SimpleGrid } from '@mantine/core';
 import { IconMapPin } from '@tabler/icons-react';
 import { useState, useMemo } from 'react';
 import { useCalendarEvents } from '../../hooks/useCalendarEvents';
@@ -75,9 +68,10 @@ function ConcertGrid() {
       .map(({ event }) => event);
   }, [data]);
 
+  if (isLoading) return <Text>Loading events...</Text>;
   if (isError) return <Text>Error: {error.message}</Text>;
 
-  if (!isLoading && events.length === 0) {
+  if (events.length === 0) {
     return (
       <Text className='concert-empty' c='dimmed'>
         No upcoming concerts right now.
@@ -85,72 +79,61 @@ function ConcertGrid() {
     );
   }
 
-  const rows = isLoading
-    ? Array.from({ length: 3 }, (_, index) => (
-        <Card
-          key={index}
-          className='concert-skeleton'
-          shadow='sm'
-          padding='lg'
-          radius='md'
-          withBorder
-        >
-          <Skeleton height={18} mb={10} />
-          <Skeleton height={14} width='55%' />
-        </Card>
-      ))
-    : events.map(event => {
-        const location = event.location?.trim();
+  const rows = events.map(event => {
+    const location = event.location?.trim();
 
-        return (
-          <Card
-            key={event.id}
-            shadow='sm'
-            padding='lg'
-            radius='md'
-            withBorder
-            onClick={() => toggleExpanded(event.id)}
-            className='concert-card'
-          >
-            <Group position='apart' className='concert-card-heading'>
-              <Text weight={500} className='concert-card-title'>
-                {event.summary || 'No Title'}
-              </Text>
-              <Text c='dimmed' size='sm' className='concert-card-date'>
-                {event.start.dateTime
-                  ? formatDateTime(event.start.dateTime)
-                  : formatDate(event.start.date)}
-              </Text>
-            </Group>
-            <Collapse
-              expanded={expandedEventId === event.id}
-              transitionDuration={200}
-            >
-              <Text size='sm' c='gray' className='concert-card-location'>
-                {location ? (
-                  <a
-                    className='concert-location'
-                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    onClick={e => e.stopPropagation()}
-                  >
-                    <IconMapPin size={14} className='concert-location-pin' />
-                    {location}
-                  </a>
-                ) : (
-                  'No Location Available'
-                )}
-              </Text>
-            </Collapse>
-          </Card>
-        );
-      });
+    return (
+      <Card
+        key={event.id}
+        shadow='sm'
+        padding='lg'
+        radius='md'
+        withBorder
+        onClick={() => toggleExpanded(event.id)}
+        className={
+          expandedEventId === event.id
+            ? 'concert-card expanded'
+            : 'concert-card'
+        }
+      >
+        <Group position='apart' className='concert-card-heading'>
+          <Text weight={500} className='concert-card-title'>
+            {event.summary || 'No Title'}
+          </Text>
+          <Text c='dimmed' size='sm' className='concert-card-date'>
+            {event.start.dateTime
+              ? formatDateTime(event.start.dateTime)
+              : formatDate(event.start.date)}
+          </Text>
+        </Group>
+        <Collapse
+          expanded={expandedEventId === event.id}
+          transitionDuration={200}
+        >
+          <Text size='sm' c='gray' className='concert-card-location'>
+            {location ? (
+              <a
+                className='concert-location'
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`}
+                target='_blank'
+                rel='noopener noreferrer'
+                onClick={e => e.stopPropagation()}
+              >
+                <IconMapPin size={14} className='concert-location-pin' />
+                {location}
+              </a>
+            ) : (
+              'No Location Available'
+            )}
+          </Text>
+        </Collapse>
+      </Card>
+    );
+  });
 
   return (
     <div className='simpleGridDiv'>
       <SimpleGrid
-        className='concert-grid'
         cols={{ base: 1, sm: 2, lg: 3 }}
         spacing={{ base: 10, sm: 'xl' }}
         verticalSpacing={{ base: 'md', sm: 'xl' }}

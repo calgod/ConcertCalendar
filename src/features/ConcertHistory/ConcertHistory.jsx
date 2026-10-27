@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Text as VisxText } from '@visx/text';
 import { Wordcloud } from '@visx/wordcloud';
 import { scaleLog } from '@visx/scale';
-import { Card, Skeleton, Text } from '@mantine/core';
+import { Card, Text } from '@mantine/core';
 import { useSheetEvents } from '../../hooks/useSheetEvents';
 import './ConcertHistory.css';
 
@@ -63,13 +63,7 @@ export default function ConcertHistory() {
 
   const fixedValueGenerator = () => 0.5;
 
-  if (isLoading) {
-    return (
-      <div className='wordcloud-container'>
-        <Skeleton className='wordcloud-skeleton' height={240} />
-      </div>
-    );
-  }
+  if (isLoading) return <Text>Loading...</Text>;
   if (isError) return <Text>Error: {error.message}</Text>;
 
   return (

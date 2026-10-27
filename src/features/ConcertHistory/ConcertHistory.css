@@ -14,11 +14,6 @@
   justify-content: center;
 }
 
-.wordcloud-container > .wordcloud-skeleton {
-  width: 90vw;
-  max-width: 1000px;
-}
-
 .wordcloud-container svg {
   margin: 0;
   padding: 0;

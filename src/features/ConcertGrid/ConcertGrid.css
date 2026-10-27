@@ -3,10 +3,15 @@ div.concert-card {
   width: 100%;
   max-width: 350px;
   height: auto;
+  max-height: 90px;
   transition: all 0.2s ease;
   overflow: hidden;
   background-color: white;
   color: rgb(59, 59, 59);
+}
+
+div.concert-card.expanded {
+  max-height: 500px;
 }
 
 div.concert-card:hover {
@@ -35,15 +40,6 @@ div.concert-card:hover {
 
 .simpleGridDiv {
   height: 100%;
-}
-
-.concert-grid {
-  align-items: start;
-}
-
-.concert-skeleton {
-  width: 100%;
-  max-width: 350px;
 }
 
 .concert-empty {
