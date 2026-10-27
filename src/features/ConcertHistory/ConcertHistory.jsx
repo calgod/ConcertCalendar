@@ -66,7 +66,7 @@ export default function ConcertHistory() {
   if (isLoading) {
     return (
       <div className='wordcloud-container'>
-        <Skeleton className='wordcloud-skeleton' />
+        <Skeleton className='wordcloud-skeleton' height={240} />
       </div>
     );
   }

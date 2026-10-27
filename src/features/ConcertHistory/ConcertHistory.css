@@ -14,10 +14,9 @@
   justify-content: center;
 }
 
-.wordcloud-skeleton {
-  width: 100%;
+.wordcloud-container > .wordcloud-skeleton {
+  width: 90vw;
   max-width: 1000px;
-  height: 240px;
 }
 
 .wordcloud-container svg {

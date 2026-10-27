@@ -37,6 +37,10 @@ div.concert-card:hover {
   height: 100%;
 }
 
+.concert-grid {
+  align-items: start;
+}
+
 .concert-skeleton {
   width: 100%;
   max-width: 350px;
