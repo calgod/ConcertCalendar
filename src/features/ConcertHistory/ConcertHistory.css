@@ -31,3 +31,10 @@
 .wordcloud textarea {
   min-height: 100px;
 }
+
+.wordcloud-container .mantine-Card-root {
+  background: var(--mantine-color-white);
+  border: 1px solid rgba(92, 51, 46, 0.1);
+  box-shadow: var(--mantine-shadow-sm);
+  border-radius: var(--mantine-radius-md);
+}

@@ -10,27 +10,28 @@ const MostRecentTrack = () => {
 
   return (
     <div className='cardDiv'>
-      <Card shadow='sm' padding='lg' radius='md' withBorder>
-        <Group wrap='nowrap'>
+      <Card
+        className='track-card'
+        shadow='sm'
+        padding='lg'
+        radius='md'
+        withBorder
+      >
+        <Group wrap='nowrap' align='center' gap='md'>
           <Image
             className='albumArt'
             src={track.image[2]['#text']}
             alt='Album Art'
-            width={100}
-            height={100}
+            width={96}
+            height={96}
             radius='md'
           />
           <div className='textDiv'>
-            <Text weight={500}>
-              <strong>Track:</strong> {track.name}
-            </Text>
-            <Text>
-              <strong>Artist:</strong> {track.artist['#text']}
-            </Text>
+            <Text className='track-kicker'>Now playing</Text>
+            <Text className='track-name'>{track.name}</Text>
+            <Text className='track-meta'>{track.artist['#text']}</Text>
             {track.album['#text'] && (
-              <Text>
-                <strong>Album:</strong> {track.album['#text']}
-              </Text>
+              <Text className='track-meta'>{track.album['#text']}</Text>
             )}
           </div>
         </Group>

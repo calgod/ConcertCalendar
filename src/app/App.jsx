@@ -8,7 +8,7 @@ import ConcertGrid from '../features/ConcertGrid/ConcertGrid';
 import ResponsiveHeader from '../features/ResponsiveHeader/ResponsiveHeader';
 import ConcertHistory from '../features/ConcertHistory/ConcertHistory';
 import MostRecentTrack from '../features/MostRecentTrack/MostRecentTrack';
-import { Space, Tabs, rem } from '@mantine/core';
+import { Space, Tabs } from '@mantine/core';
 import {
   IconMusicPin,
   IconHistory,
@@ -16,8 +16,6 @@ import {
 } from '@tabler/icons-react';
 
 function App() {
-  const iconStyle = { width: rem(16), height: rem(16) };
-
   return (
     <div className='App'>
       <Space h={30}></Space>
@@ -26,25 +24,26 @@ function App() {
 
         <Tabs
           className='concertTabs'
+          variant='pills'
           defaultValue='upcoming'
           keepMountedMode='display-none'
         >
           <Tabs.List justify='center'>
             <Tabs.Tab
               value='upcoming'
-              leftSection={<IconMusicPin style={iconStyle} />}
+              leftSection={<IconMusicPin size={16} stroke={1.75} />}
             >
               Upcoming
             </Tabs.Tab>
             <Tabs.Tab
               value='history'
-              leftSection={<IconHistory style={iconStyle} />}
+              leftSection={<IconHistory size={16} stroke={1.75} />}
             >
               History
             </Tabs.Tab>
             <Tabs.Tab
               value='recent'
-              leftSection={<IconBrandLastfm style={iconStyle} />}
+              leftSection={<IconBrandLastfm size={16} stroke={1.75} />}
             >
               Now Playing
             </Tabs.Tab>
