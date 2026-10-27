@@ -1,8 +1,45 @@
-import { Card, Text, Group, Collapse, SimpleGrid } from '@mantine/core';
+import {
+  Card,
+  Text,
+  Group,
+  Collapse,
+  SimpleGrid,
+  Skeleton,
+} from '@mantine/core';
 import { IconMapPin } from '@tabler/icons-react';
 import { useState, useMemo } from 'react';
 import { useCalendarEvents } from '../../hooks/useCalendarEvents';
 import './ConcertGrid.css';
+
+function getEventStart(event) {
+  if (event.start.date) {
+    const [y, m, d] = event.start.date.split('-').map(Number);
+    return new Date(y, m - 1, d);
+  }
+  return new Date(event.start.dateTime);
+}
+
+function formatDateTime(dateString) {
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(date);
+}
+
+function formatDate(dateString) {
+  const date = new Date(Date.parse(dateString));
+  return new Intl.DateTimeFormat('en-US', {
+    timeZone: 'UTC',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(date);
+}
 
 function ConcertGrid() {
   const { data, isLoading, isError, error } = useCalendarEvents();
@@ -25,14 +62,6 @@ function ConcertGrid() {
     }
   };
 
-  const getEventStart = event => {
-    if (event.start.date) {
-      const [y, m, d] = event.start.date.split('-').map(Number);
-      return new Date(y, m - 1, d);
-    }
-    return new Date(event.start.dateTime);
-  };
-
   const events = useMemo(() => {
     if (!data) return [];
 
@@ -46,82 +75,77 @@ function ConcertGrid() {
       .map(({ event }) => event);
   }, [data]);
 
-  const formatDateTime = dateString => {
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat('en-US', {
-      timeZone: 'America/New_York',
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    }).format(date);
-  };
-
-  const formatDate = dateString => {
-    const date = new Date(Date.parse(dateString));
-    return new Intl.DateTimeFormat('en-US', {
-      timeZone: 'UTC',
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-    }).format(date);
-  };
-
-  if (isLoading) return <Text>Loading events...</Text>;
   if (isError) return <Text>Error: {error.message}</Text>;
 
-  const rows = events.map(event => {
-    const location = event.location?.trim();
-
+  if (!isLoading && events.length === 0) {
     return (
-      <Card
-        key={event.id}
-        shadow='sm'
-        padding='lg'
-        radius='md'
-        withBorder
-        onClick={() => toggleExpanded(event.id)}
-        className={
-          expandedEventId === event.id
-            ? 'concert-card expanded'
-            : 'concert-card'
-        }
-      >
-        <Group position='apart' className='concert-card-heading'>
-          <Text weight={500} className='concert-card-title'>
-            {event.summary || 'No Title'}
-          </Text>
-          <Text c='dimmed' size='sm' className='concert-card-date'>
-            {event.start.dateTime
-              ? formatDateTime(event.start.dateTime)
-              : formatDate(event.start.date)}
-          </Text>
-        </Group>
-        <Collapse
-          expanded={expandedEventId === event.id}
-          transitionDuration={200}
-        >
-          <Text size='sm' c='gray' className='concert-card-location'>
-            {location ? (
-              <a
-                className='concert-location'
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`}
-                target='_blank'
-                rel='noopener noreferrer'
-                onClick={e => e.stopPropagation()}
-              >
-                <IconMapPin size={14} className='concert-location-pin' />
-                {location}
-              </a>
-            ) : (
-              'No Location Available'
-            )}
-          </Text>
-        </Collapse>
-      </Card>
+      <Text className='concert-empty' c='dimmed'>
+        No upcoming concerts right now.
+      </Text>
     );
-  });
+  }
+
+  const rows = isLoading
+    ? Array.from({ length: 3 }, (_, index) => (
+        <Card
+          key={index}
+          className='concert-skeleton'
+          shadow='sm'
+          padding='lg'
+          radius='md'
+          withBorder
+        >
+          <Skeleton height={18} mb={10} />
+          <Skeleton height={14} width='55%' />
+        </Card>
+      ))
+    : events.map(event => {
+        const location = event.location?.trim();
+
+        return (
+          <Card
+            key={event.id}
+            shadow='sm'
+            padding='lg'
+            radius='md'
+            withBorder
+            onClick={() => toggleExpanded(event.id)}
+            className='concert-card'
+          >
+            <Group position='apart' className='concert-card-heading'>
+              <Text weight={500} className='concert-card-title'>
+                {event.summary || 'No Title'}
+              </Text>
+              <Text c='dimmed' size='sm' className='concert-card-date'>
+                {event.start.dateTime
+                  ? formatDateTime(event.start.dateTime)
+                  : formatDate(event.start.date)}
+              </Text>
+            </Group>
+            <Collapse
+              expanded={expandedEventId === event.id}
+              transitionDuration={200}
+            >
+              <Text size='sm' c='gray' className='concert-card-location'>
+                {location ? (
+                  <a
+                    className='concert-location'
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    onClick={e => e.stopPropagation()}
+                  >
+                    <IconMapPin size={14} className='concert-location-pin' />
+                    {location}
+                  </a>
+                ) : (
+                  'No Location Available'
+                )}
+              </Text>
+            </Collapse>
+          </Card>
+        );
+      });
 
   return (
     <div className='simpleGridDiv'>

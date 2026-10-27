@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Text as VisxText } from '@visx/text';
 import { Wordcloud } from '@visx/wordcloud';
 import { scaleLog } from '@visx/scale';
-import { Card, Text } from '@mantine/core';
+import { Card, Skeleton, Text } from '@mantine/core';
 import { useSheetEvents } from '../../hooks/useSheetEvents';
+import './ConcertHistory.css';
 
 const colors = ['#87CEFA', '#6B8E23', '#FF6F61'];
 
@@ -62,30 +63,18 @@ export default function ConcertHistory() {
 
   const fixedValueGenerator = () => 0.5;
 
-  if (isLoading) return <Text>Loading...</Text>;
+  if (isLoading) {
+    return (
+      <div className='wordcloud-container'>
+        <Skeleton className='wordcloud-skeleton' />
+      </div>
+    );
+  }
   if (isError) return <Text>Error: {error.message}</Text>;
 
   return (
-    <div
-      ref={containerRef}
-      className='wordcloud-container w-full'
-      style={{
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: 0,
-        padding: 0,
-      }}
-    >
-      <Card
-        style={{
-          padding: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
+    <div ref={containerRef} className='wordcloud-container'>
+      <Card className='wordcloud-card' padding={0}>
         {phrases.length > 0 && (
           <Wordcloud
             words={phrases}
