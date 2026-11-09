@@ -1,5 +1,6 @@
 import './App.css';
 import React from 'react';
+import { useSearchParams } from 'react-router';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -16,7 +17,16 @@ import {
 } from '@tabler/icons-react';
 
 function App() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const iconStyle = { width: rem(16), height: rem(16) };
+  const tab = searchParams.get('tab');
+  const activeTab = tab === 'history' || tab === 'recent' ? tab : 'upcoming';
+
+  const onTabChange = value => {
+    setSearchParams(value === 'upcoming' ? {} : { tab: value }, {
+      replace: true,
+    });
+  };
 
   return (
     <div className='App'>
@@ -26,7 +36,8 @@ function App() {
 
         <Tabs
           className='concertTabs'
-          defaultValue='upcoming'
+          value={activeTab}
+          onChange={onTabChange}
           keepMountedMode='display-none'
         >
           <Tabs.List justify='center'>
