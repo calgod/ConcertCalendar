@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect } from 'react';
+import React from 'react';
 import { useSearchParams } from 'react-router';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -16,34 +16,17 @@ import {
   IconBrandLastfm,
 } from '@tabler/icons-react';
 
-function withTabParam(prev, value) {
-  const next = new URLSearchParams(prev);
-  if (value === 'history' || value === 'recent') {
-    next.set('tab', value);
-  } else {
-    next.delete('tab');
-  }
-  return next;
-}
-
 function App() {
   const [searchParams, setSearchParams] = useSearchParams();
   const iconStyle = { width: rem(16), height: rem(16) };
-  const tabParam = searchParams.get('tab');
-  const activeTab =
-    tabParam === 'history' || tabParam === 'recent' ? tabParam : 'upcoming';
+  const tab = searchParams.get('tab');
+  const activeTab = tab === 'history' || tab === 'recent' ? tab : 'upcoming';
 
-  const selectTab = value => {
-    setSearchParams(prev => withTabParam(prev, value), { replace: true });
+  const onTabChange = value => {
+    setSearchParams(value === 'upcoming' ? {} : { tab: value }, {
+      replace: true,
+    });
   };
-
-  useEffect(() => {
-    if (activeTab === 'upcoming' && tabParam != null) {
-      setSearchParams(prev => withTabParam(prev, 'upcoming'), {
-        replace: true,
-      });
-    }
-  }, [activeTab, tabParam, setSearchParams]);
 
   return (
     <div className='App'>
@@ -54,7 +37,7 @@ function App() {
         <Tabs
           className='concertTabs'
           value={activeTab}
-          onChange={selectTab}
+          onChange={onTabChange}
           keepMountedMode='display-none'
         >
           <Tabs.List justify='center'>
