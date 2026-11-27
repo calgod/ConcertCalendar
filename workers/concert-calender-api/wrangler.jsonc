@@ -1,0 +1,35 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "concert-calender-api",
+  "main": "src/index.js",
+  // Keep the dashboard Worker name (including the historical "calender" spelling)
+  // so Workers Builds / wrangler deploy target the existing production Worker.
+  "compatibility_date": "2026-11-27",
+  "workers_dev": true,
+  "upload_source_maps": true,
+  "routes": [
+    {
+      "pattern": "*calgod.com/api*",
+      "zone_name": "calgod.com",
+    },
+  ],
+  "vars": {
+    "GOOGLE_CALENDAR_ID": "eh0ecg2pdj64oroem5e5n5lktg@group.calendar.google.com",
+    "GOOGLE_SHEET_ID": "1-xcndjOR22QA6lqL-2--0zvOIDY1PNqAGTXde5qfkds",
+    "GOOGLE_SHEET_NAME": "Sheet1",
+  },
+  "secrets": {
+    "required": ["GOOGLE_CALENDAR_API_KEY"],
+  },
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+    },
+    "traces": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+    },
+  },
+}

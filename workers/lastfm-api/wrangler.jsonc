@@ -1,0 +1,31 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "lastfm-api",
+  "main": "src/index.js",
+  "compatibility_date": "2026-11-27",
+  "workers_dev": true,
+  "upload_source_maps": true,
+  "routes": [
+    {
+      "pattern": "*calgod.com/lastfm-api*",
+      "zone_name": "calgod.com",
+    },
+  ],
+  "vars": {
+    "LASTFM_USERNAME": "c-_-g",
+  },
+  "secrets": {
+    "required": ["LASTFM_API_KEY"],
+  },
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+    },
+    "traces": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+    },
+  },
+}
