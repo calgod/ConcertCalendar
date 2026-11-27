@@ -4,6 +4,36 @@ import { useState, useMemo } from 'react';
 import { useCalendarEvents } from '../../hooks/useCalendarEvents';
 import './ConcertGrid.css';
 
+function getEventStart(event) {
+  if (event.start.date) {
+    const [y, m, d] = event.start.date.split('-').map(Number);
+    return new Date(y, m - 1, d);
+  }
+  return new Date(event.start.dateTime);
+}
+
+function formatDateTime(dateString) {
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(date);
+}
+
+function formatDate(dateString) {
+  const date = new Date(Date.parse(dateString));
+  return new Intl.DateTimeFormat('en-US', {
+    timeZone: 'UTC',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(date);
+}
+
 function ConcertGrid() {
   const { data, isLoading, isError, error } = useCalendarEvents();
   const [expandedEventId, setExpandedEventId] = useState(null);
@@ -25,14 +55,6 @@ function ConcertGrid() {
     }
   };
 
-  const getEventStart = event => {
-    if (event.start.date) {
-      const [y, m, d] = event.start.date.split('-').map(Number);
-      return new Date(y, m - 1, d);
-    }
-    return new Date(event.start.dateTime);
-  };
-
   const events = useMemo(() => {
     if (!data) return [];
 
@@ -46,30 +68,16 @@ function ConcertGrid() {
       .map(({ event }) => event);
   }, [data]);
 
-  const formatDateTime = dateString => {
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat('en-US', {
-      timeZone: 'America/New_York',
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    }).format(date);
-  };
-
-  const formatDate = dateString => {
-    const date = new Date(Date.parse(dateString));
-    return new Intl.DateTimeFormat('en-US', {
-      timeZone: 'UTC',
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-    }).format(date);
-  };
-
   if (isLoading) return <Text>Loading events...</Text>;
   if (isError) return <Text>Error: {error.message}</Text>;
+
+  if (events.length === 0) {
+    return (
+      <Text className='concert-empty' c='dimmed'>
+        No upcoming concerts right now.
+      </Text>
+    );
+  }
 
   const rows = events.map(event => {
     const location = event.location?.trim();

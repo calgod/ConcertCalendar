@@ -4,6 +4,7 @@ import { Wordcloud } from '@visx/wordcloud';
 import { scaleLog } from '@visx/scale';
 import { Card, Text } from '@mantine/core';
 import { useSheetEvents } from '../../hooks/useSheetEvents';
+import './ConcertHistory.css';
 
 const colors = ['#87CEFA', '#6B8E23', '#FF6F61'];
 
@@ -66,26 +67,8 @@ export default function ConcertHistory() {
   if (isError) return <Text>Error: {error.message}</Text>;
 
   return (
-    <div
-      ref={containerRef}
-      className='wordcloud-container w-full'
-      style={{
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: 0,
-        padding: 0,
-      }}
-    >
-      <Card
-        style={{
-          padding: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
+    <div ref={containerRef} className='wordcloud-container'>
+      <Card className='wordcloud-card' padding={0}>
         {phrases.length > 0 && (
           <Wordcloud
             words={phrases}

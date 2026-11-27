@@ -42,6 +42,10 @@ div.concert-card:hover {
   height: 100%;
 }
 
+.concert-empty {
+  padding-top: 1.5rem;
+}
+
 a.concert-location {
   color: inherit;
   text-decoration: none;
